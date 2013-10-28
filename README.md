@@ -1,8 +1,7 @@
 The Problem
 ============
 
-Linux provides a mechanism to cap the resources of users by specifying the rules in the /etc/security/limits.conf. Using this facility , some of the resources that can be capped are
-
+Linux provides a mechanism to cap the resources of users by specifying the rules in the /etc/security/limits.conf. Using this facility , some of the resources that can be capped are:
 
 	*Core file size (core).
 	*Size of the heap (data).

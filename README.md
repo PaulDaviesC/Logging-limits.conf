@@ -30,3 +30,4 @@ Here I will list the system calls and their corresponding errno numbers to be tr
 --- | ---
 fork() | EAGAIN
 clone() | EAGAIN
+vfork() | EAGAIN

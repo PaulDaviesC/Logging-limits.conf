@@ -24,7 +24,7 @@ The answer to monitoring the system calls in a Linux system is the **audit subsy
 
 Here I will list the system calls and their corresponding errno numbers to be tracked. I will also be mentioning the audit rules that has too be specified.
 
-#### Maximum Number of Processes
+#### Maximum Number of Processes (noproc)
 
 |System call|ERRNO |
 --- | ---

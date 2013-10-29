@@ -31,3 +31,8 @@ Here I will list the system calls and their corresponding errno numbers to be tr
 fork() | EAGAIN
 clone() | EAGAIN
 vfork() | EAGAIN
+
+##### Rules
+* auditctl -a exit,always -S clone -F exit=-EAGAIN -F success=0 -k noproc
+* auditctl -a exit,always -S fork -F exit=-EAGAIN -F success=0 -k noproc
+* auditctl -a exit,always -S vfork -F exit=-EAGAIN -F success=0 -k noproc

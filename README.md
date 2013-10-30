@@ -66,5 +66,11 @@ Similarly we will also be tracking the failed prlimit system calls. It can be us
 --- | ---
 setrlimit() | EINVAL
 setrlimit() | EPERM
-plrlimit() | EINVAL
-plrlimit() | EPERM
+prlimit() | EINVAL
+prlimit() | EPERM
+
+##### Rules
+* auditctl -a exit,always -S setrlimit -F exit=-EINVAL -F success=0 -k rlimit
+* auditctl -a exit,always -S setrlimit -F exit=-EPERM -F success=0 -k rlimit
+* auditctl -a exit,always -S prlimit -F exit=-EINVAL -F success=0 -k rlimit
+* auditctl -a exit,always -S prlimit -F exit=-EPERM -F success=0 -k rlimit

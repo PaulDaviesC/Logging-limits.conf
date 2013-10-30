@@ -44,5 +44,5 @@ vfork() | EAGAIN
 open | EMFILE
 
 ##### Rules
-* auditctl -a exit,always -S open -F exit=-EMFILE -F success=0 -k noproc
+* auditctl -a exit,always -S open -F exit=-EMFILE -F success=0 -k nofile
 

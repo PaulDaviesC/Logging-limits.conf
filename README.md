@@ -46,3 +46,25 @@ open() | EMFILE
 ##### Rules
 * auditctl -a exit,always -S open -F exit=-EMFILE -F success=0 -k nofile
 
+
+#### Maximum locked in memory (memlock)
+
+|System call|ERRNO |
+--- | ---
+open() | EMFILE
+
+##### Rules
+* auditctl -a exit,always -S open -F exit=-EMFILE -F success=0 -k nofile
+
+#### Need for tracking setrlimit and plrimit
+
+The process may request for the the raising the current limits imposed using setrlimit(). However that request can fail due to the hard limit imposed on a resource in limits.conf. So we need to track failed the setrlimit(). The resource it requested must have to be deduced from the value of a0(the first argument to setrlimit) , which is logged by the audit. 
+
+Similarly we will also be tracking the failed prlimit system calls. It can be used to both set and get the resource limits of an arbitrary process.
+
+|System call|ERRNO |
+--- | ---
+setrlimit() | EINVAL
+setrlimit() | EPERM
+plrlimit() | EINVAL
+plrlimit() | EPERM

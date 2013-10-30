@@ -41,7 +41,7 @@ vfork() | EAGAIN
 
 |System call|ERRNO |
 --- | ---
-open | EMFILE
+open() | EMFILE
 
 ##### Rules
 * auditctl -a exit,always -S open -F exit=-EMFILE -F success=0 -k nofile

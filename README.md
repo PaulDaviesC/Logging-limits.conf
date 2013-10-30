@@ -36,3 +36,13 @@ vfork() | EAGAIN
 * auditctl -a exit,always -S clone -F exit=-EAGAIN -F success=0 -k noproc
 * auditctl -a exit,always -S fork -F exit=-EAGAIN -F success=0 -k noproc
 * auditctl -a exit,always -S vfork -F exit=-EAGAIN -F success=0 -k noproc
+
+#### Maximum Number of open files (nofile)
+
+|System call|ERRNO |
+--- | ---
+open | EMFILE
+
+##### Rules
+* auditctl -a exit,always -S open -F exit=-EMFILE -F success=0 -k noproc
+

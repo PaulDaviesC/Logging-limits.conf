@@ -47,14 +47,15 @@ open() | EMFILE
 * auditctl -a exit,always -S open -F exit=-EMFILE -F success=0 -k nofile
 
 
-#### Maximum locked in memory (memlock)
+#### Maximum File Size (fsize)
 
+This restircts the largest size of the file that process can write to.
 |System call|ERRNO |
 --- | ---
-open() | EMFILE
+write() | EFBIG
 
 ##### Rules
-* auditctl -a exit,always -S open -F exit=-EMFILE -F success=0 -k nofile
+* auditctl -a exit,always -S write -F exit=-EFBIG -F success=0 -k fsize
 
 #### Need for tracking setrlimit and plrimit
 

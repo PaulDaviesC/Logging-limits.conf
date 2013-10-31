@@ -50,6 +50,7 @@ open() | EMFILE
 #### Maximum File Size (fsize)
 
 This restircts the largest size of the file that process can write to.
+
 |System call|ERRNO |
 --- | ---
 write() | EFBIG

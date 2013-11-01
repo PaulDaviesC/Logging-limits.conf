@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<fcntl.h>
+//Set NOFILE to a value greater than the one in limits.conf. 
 #define NOFILE 30
 int main()
 {

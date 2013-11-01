@@ -12,6 +12,7 @@ After adding the required rules by running the *rules.sh* the violations can be 
 
 * noproc : **ausearch -k noproc**
 * fsize : **ausearch -k fsize**
+* nofile : **ausearch -k nofile**
 
 
 Testing

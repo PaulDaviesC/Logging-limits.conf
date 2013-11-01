@@ -10,6 +10,8 @@ Configure
 
 1. You must have the **auditd** installed in your Linux box.
 2. Run rules.sh as root. Now the auditd starts logging the violations.
+3. To list rules that are added use **auditctl -l**.
+4. Now Refer "Rules in Action" section.
 
 Rules in Action
 ===============

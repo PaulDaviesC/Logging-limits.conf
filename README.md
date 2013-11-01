@@ -5,6 +5,12 @@ Linux provides a mechanism to cap the resources of users by specifying the rules
 
 The rules are specified in the rules.sh file. Run that file to add the required rules to audit system.
 
+Configure
+=========
+
+1. You must have the **auditd** installed in your Linux box.
+2. Run rules.sh as root. Now the auditd starts logging the violations.
+
 Rules in Action
 ===============
 
@@ -19,7 +25,7 @@ Testing
 =======
 In order to test the validity of rules kindly refer to tests/README.md.
 
-How it works
+How it works?
 ============
 
 Read the DOC.md file.

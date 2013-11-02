@@ -1,0 +1,65 @@
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1876): item=0 name="17"
+type=CWD msg=audit(1383317232.341:1876):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1876): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=11 a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1877): item=0 name="18"
+type=CWD msg=audit(1383317232.341:1877):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1877): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=12 a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1878): item=0 name="19"
+type=CWD msg=audit(1383317232.341:1878):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1878): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=13 a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1879): item=0 name="20"
+type=CWD msg=audit(1383317232.341:1879):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1879): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=14 a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1880): item=0 name="21"
+type=CWD msg=audit(1383317232.341:1880):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1880): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=15 a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1881): item=0 name="22"
+type=CWD msg=audit(1383317232.341:1881):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1881): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=16 a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1882): item=0 name="23"
+type=CWD msg=audit(1383317232.341:1882):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1882): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=17 a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1883): item=0 name="24"
+type=CWD msg=audit(1383317232.341:1883):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1883): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=18 a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1884): item=0 name="25"
+type=CWD msg=audit(1383317232.341:1884):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1884): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=19 a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1885): item=0 name="26"
+type=CWD msg=audit(1383317232.341:1885):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1885): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=1a a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1886): item=0 name="27"
+type=CWD msg=audit(1383317232.341:1886):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1886): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=1b a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1887): item=0 name="28"
+type=CWD msg=audit(1383317232.341:1887):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1887): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=1c a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"
+----
+time->Fri Nov  1 20:17:12 2013
+type=PATH msg=audit(1383317232.341:1888): item=0 name="29"
+type=CWD msg=audit(1383317232.341:1888):  cwd="/home/test"
+type=SYSCALL msg=audit(1383317232.341:1888): arch=40000003 syscall=5 success=no exit=-24 a0=bf8eb098 a1=0 a2=1d a3=0 items=1 ppid=5406 pid=7393 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=34 comm="a.out" exe="/home/test/a.out" key="nofile"

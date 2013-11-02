@@ -1,2 +1,7 @@
 
-Violation has been detected. Please see the attachment.
+FILE SIZE VIOLATION
+      1 auid=1002	exe="/bin/cp"
+PROCESS NUMBER VIOLATION
+    593 auid=1002	exe="/home/test/a.out"
+NUMBER OF FILES VIOLATION
+     13 auid=1002	exe="/home/test/a.out"

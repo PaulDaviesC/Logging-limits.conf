@@ -1,0 +1,4 @@
+1,3d0
+< ----
+< time->Sat Nov  2 07:22:10 2013
+< type=SYSCALL msg=audit(1383357130.425:50): arch=40000003 syscall=4 success=no exit=-27 a0=4 a1=80c7000 a2=6000 a3=80c7000 items=0 ppid=3388 pid=3546 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 tty=pts2 ses=14 comm="cp" exe="/bin/cp" key="fsize"

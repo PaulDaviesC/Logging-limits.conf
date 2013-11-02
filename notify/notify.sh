@@ -9,7 +9,7 @@ function finish
 {
 	/bin/cp $DIR/currop $DIR/prevop
 	/bin/cp $DIR/currfsizelog $DIR/prevfsizelog
-	/bin/cp $DIR/currnoproclog $DIR/prevproclog
+	/bin/cp $DIR/currnoproclog $DIR/prevnoproclog
 	/bin/cp $DIR/currnofilelog $DIR/prevfilelog
 }
 

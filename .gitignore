@@ -1,10 +1,12 @@
 Makefile
 a.out
 currop
+prevop
 currnoproclog
 currfsizelog
 currnofilelog
 prevnoproclog
 prevfsizelog
 prevnofilelog
+message
 diffop

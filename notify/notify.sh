@@ -2,7 +2,7 @@
 #This program sends mail using mutt when some new violations happen. Put this script to the crontab of the root user. We collect the report to "message" file and  this file is sent as the body of the mail. Mutt must be configure for the root user.
 
 #Set the directory where you want to 
-DIR='/root'
+DIR=`dirname $0`
 
 #This function is used to do some opearion during the exit
 function finish
@@ -10,12 +10,12 @@ function finish
 	/bin/cp $DIR/currop $DIR/prevop
 	/bin/cp $DIR/currfsizelog $DIR/prevfsizelog
 	/bin/cp $DIR/currnoproclog $DIR/prevnoproclog
-	/bin/cp $DIR/currnofilelog $DIR/prevfilelog
+	/bin/cp $DIR/currnofilelog $DIR/prevnofilelog
 }
 
 function send_mail
 {
-	/usr/bin/mutt -s "[VIOLATION] Limits hit Detected" <$DIR/message -- pauldaviesc@gmail.com 2>/dev/null	
+	cat $DIR/message | mail -s "[VIOLATION] Limits hit Detected" devs@codelearn.org pauldaviesc@gmail.com -aFrom:mail@ofpiyush.in
 }
 /bin/echo > $DIR/message
 /sbin/aureport -x --failed --summary  -i -if /var/log/audit/audit.log > $DIR/currop
@@ -30,7 +30,7 @@ fi
 
 #If there is fsize violation add it to message.
 /sbin/ausearch  -k fsize -sv no -if /var/log/audit/audit.log  > $DIR/currfsizelog
-/usr/bin/diff -N --suppress-common-lines currfsizelog prevfsizelog > $DIR/diffop
+/usr/bin/diff -N --suppress-common-lines $DIR/currfsizelog $DIR/prevfsizelog > $DIR/diffop
 if [[ $? -gt 0 ]] 
 then
 	echo "FILE SIZE VIOLATION" >> $DIR/message
@@ -52,7 +52,7 @@ fi
 if [[ $? -gt 0 ]] 
 then
 	echo "NUMBER OF FILES VIOLATION" >> $DIR/message
-	/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/uniq -c >> $DIR/message
+	/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/uniq -c  >> $DIR/message
 fi
 
 #Now the report is in message file.We will be sending the mail with message as body.

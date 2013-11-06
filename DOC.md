@@ -58,6 +58,23 @@ write() | EFBIG
 ##### Rules
 * auditctl -a exit,always -S write -F exit=-EFBIG -F success=0 -k fsize
 
+#### Memory lock (memlock)
+
+This restircts the amount of physical memory used up by a process. Some process may require a minimum amount of memory to be in the physical memory. The processes request for locking in the pages to memory using mlock system call family.
+
+|System call|ERRNO |
+--- | ---
+mlock() | ENOMEM
+munlock() | ENOMEM
+mlockall() | ENOMEM
+munlockall() | ENOMEM
+
+##### Rules
+* auditctl -a exit,always -S mlock -F exit=-ENOMEM -F success=0 -k memlock
+* auditctl -a exit,always -S mlockall -F exit=-ENOMEM -F success=0 -k memlock
+* auditctl -a exit,always -S munlock -F exit=-ENOMEM -F success=0 -k memlock
+* auditctl -a exit,always -S munlockall -F exit=-ENOMEM -F success=0 -k memlock
+
 #### Need for tracking setrlimit and plrimit
 
 The process may request for the the raising the current limits imposed using setrlimit(). However that request can fail due to the hard limit imposed on a resource in limits.conf. So we need to track failed the setrlimit(). The resource it requested must have to be deduced from the value of a0(the first argument to setrlimit) , which is logged by the audit. 

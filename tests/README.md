@@ -14,3 +14,8 @@ Testing nofile violation logging
 --------------------------------
 1.  Compile and run tests/nofile.c
 2.  Use **ausearch -k nofile** to list the violation.
+
+Testing memlock violation logging
+--------------------------------
+1.  Compile and run tests/memlock.c
+2.  Use **ausearch -k memlock** to list the violation.

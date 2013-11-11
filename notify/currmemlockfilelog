@@ -1,0 +1,18 @@
+----
+time->Mon Nov 11 15:13:24 2013
+type=CONFIG_CHANGE msg=audit(1384163004.047:2132): auid=0 ses=102 op="add rule" key="memlock" list=4 res=0
+----
+time->Mon Nov 11 15:13:24 2013
+type=CONFIG_CHANGE msg=audit(1384163004.047:2133): auid=0 ses=102 op="add rule" key="memlock" list=4 res=0
+----
+time->Mon Nov 11 15:13:24 2013
+type=CONFIG_CHANGE msg=audit(1384163004.055:2136): auid=0 ses=102 op="add rule" key="memlock" list=4 res=0
+----
+time->Mon Nov 11 15:13:24 2013
+type=CONFIG_CHANGE msg=audit(1384163004.071:2143): auid=0 ses=102 op="add rule" key="memlock" list=4 res=0
+----
+time->Mon Nov 11 15:17:49 2013
+type=SYSCALL msg=audit(1384163269.764:7055): arch=40000003 syscall=152 success=no exit=-12 a0=3 a1=40000 a2=b76d8ff4 a3=0 items=0 ppid=25332 pid=25559 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 ses=116 tty=pts2 comm="a.out" exe="/home/test/a.out" key="memlock"
+----
+time->Mon Nov 11 15:21:26 2013
+type=SYSCALL msg=audit(1384163486.757:7063): arch=40000003 syscall=152 success=no exit=-12 a0=3 a1=40000 a2=b76d4ff4 a3=0 items=0 ppid=25332 pid=25788 auid=1002 uid=1002 gid=1002 euid=1002 suid=1002 fsuid=1002 egid=1002 sgid=1002 fsgid=1002 ses=116 tty=pts2 comm="a.out" exe="/home/test/a.out" key="memlock"

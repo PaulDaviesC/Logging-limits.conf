@@ -55,6 +55,15 @@ then
 	/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/uniq -c  >> $DIR/message
 fi
 
+#If there is a memlock violation add it to message.
+/sbin/ausearch  -k memlock -sv no -if /var/log/audit/audit.log > $DIR/currmemlockfilelog
+/usr/bin/diff -N --suppress-common-lines $DIR/currmemlockfilelog $DIR/prevmemlockfilelog > $DIR/diffop
+if [[ $? -gt 0 ]] 
+then
+	echo "MEMLOCK VIOLATION" >> $DIR/message
+	/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/uniq -c  >> $DIR/message
+fi
+
 #Now the report is in message file.We will be sending the mail with message as body.
 send_mail
 finish

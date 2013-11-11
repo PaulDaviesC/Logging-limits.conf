@@ -5,8 +5,11 @@ prevop
 currnoproclog
 currfsizelog
 currnofilelog
+currmemlocklog
 prevnoproclog
 prevfsizelog
+prevmemlocklog
 prevnofilelog
 message
 diffop
+!.gitignore

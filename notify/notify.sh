@@ -11,6 +11,7 @@ function finish
 	/bin/cp $DIR/currfsizelog $DIR/prevfsizelog
 	/bin/cp $DIR/currnoproclog $DIR/prevnoproclog
 	/bin/cp $DIR/currnofilelog $DIR/prevnofilelog
+	/bin/cp $DIR/currmemlocklog $DIR/prevmemlocklog
 }
 
 function send_mail
@@ -56,8 +57,8 @@ then
 fi
 
 #If there is a memlock violation add it to message.
-/sbin/ausearch  -k memlock -sv no -if /var/log/audit/audit.log > $DIR/currmemlockfilelog
-/usr/bin/diff -N --suppress-common-lines $DIR/currmemlockfilelog $DIR/prevmemlockfilelog > $DIR/diffop
+/sbin/ausearch  -k memlock -sv no -if /var/log/audit/audit.log > $DIR/currmemlocklog
+/usr/bin/diff -N --suppress-common-lines $DIR/currmemlocklog $DIR/prevmemlocklog > $DIR/diffop
 if [[ $? -gt 0 ]] 
 then
 	echo "MEMLOCK VIOLATION" >> $DIR/message

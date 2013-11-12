@@ -75,6 +75,14 @@ munlockall() | ENOMEM
 * auditctl -a exit,always -S munlock -F exit=-ENOMEM -F success=0 -k memlock
 * auditctl -a exit,always -S munlockall -F exit=-ENOMEM -F success=0 -k memlock
 
+#### CPU time (cpu)
+
+So far only the cpu soft time limit can only be logged. This due to the fact
+that audit system does not log non core dump signals. When a process hits the
+soft limit ,  it gets delivered a SIGXCPU signal and if it gets kiled due to
+that then that  gets logged. However when a process hits hard limit , it
+gets delivered a SIGKILL which will not be logged.
+
 #### Need for tracking setrlimit and plrimit
 
 The process may request for the the raising the current limits imposed using setrlimit(). However that request can fail due to the hard limit imposed on a resource in limits.conf. So we need to track failed the setrlimit(). The resource it requested must have to be deduced from the value of a0(the first argument to setrlimit) , which is logged by the audit. 

@@ -1,7 +1,6 @@
 #!/bin/bash
-#This program sends mail using mutt when some new violations happen. Put this script to the crontab of the root user. We collect the report to "message" file and  this file is sent as the body of the mail. Mutt must be configure for the root user.
+#This program sends mail when some new violations happen. Put this script to the crontab of the root user. We collect the report to "message" file and  this file is sent as the body of the mail. Mutt must be configure for the root user.
 
-#Set the directory where you want to 
 function send_mail
 {
 	cat $DIR/message | mail -s "[VIOLATION] Limits hit Detected" devs@codelearn.org pauldaviesc@gmail.com -aFrom:mail@ofpiyush.in
@@ -25,6 +24,7 @@ function finish
 
 function main
 {
+	#Set the directory where you want to 
 	DIR=`dirname $0`
 	/bin/echo > $DIR/message
 	sendmail=0
@@ -34,7 +34,7 @@ function main
 	if [[ $? -gt 0 ]] #If new violation has happened from last checkpoint then add it to message.
 	then
 		echo "SOFT CPU TIME VIOLATION" >> $DIR/message
-		/usr/bin/awk '{print $5"\t"$9}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		/usr/bin/awk '{if($2=="type=ANOM_ABEND"){ print $5"\t"$9}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
 		sendmail=1
 	fi
 

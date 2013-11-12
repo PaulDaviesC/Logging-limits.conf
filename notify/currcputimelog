@@ -1,0 +1,36 @@
+type=ANOM_ABEND msg=audit(1383664523.242:40): auid=1000 uid=1000 gid=1000 ses=2 pid=2914 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1383664701.315:46): auid=1002 uid=1002 gid=1002 ses=14 pid=3345 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1383666751.961:35): auid=1002 uid=1002 gid=1002 ses=7 pid=2917 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1383695789.464:34): auid=1002 uid=1002 gid=1002 ses=6 pid=2924 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1383695815.900:40): auid=1002 uid=1002 gid=1002 ses=6 pid=2936 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1383695904.388:44): auid=1002 uid=1002 gid=1002 ses=6 pid=2971 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1383740486.245:42): auid=1002 uid=1002 gid=1002 ses=6 pid=3083 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1383743179.835:34): auid=1002 uid=1002 gid=1002 ses=6 pid=2890 comm="a.out" reason="cpu violation" sig=24
+type=ANOM_ABEND msg=audit(1383758430.758:34): auid=1000 uid=1000 gid=1000 ses=2 pid=2708 comm="a.out" reason="cpu time violation" sig=24
+type=ANOM_ABEND msg=audit(1383841706.694:33): auid=1000 uid=1000 gid=1000 ses=3 pid=2660 comm="a.out" reason="signal" sig=24
+type=ANOM_ABEND msg=audit(1383882207.132:31): auid=1000 uid=1000 gid=1000 ses=2 pid=2741 comm="a.out" sig=24
+type=ANOM_ABEND msg=audit(1383883303.980:28): auid=1000 uid=1000 gid=1000 ses=2 pid=2535 comm="a.out" sig=24
+type=ANOM_ABEND msg=audit(1383964779.939:44): auid=1002 uid=1002 gid=1002 ses=11 pid=3468 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1383964977.483:49): auid=1002 uid=1002 gid=1002 ses=11 pid=3562 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1383965623.681:66): auid=1000 uid=1000 gid=1000 ses=7 pid=2634 comm="thunderbird" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1383966378.513:84): auid=1002 uid=1002 gid=1002 ses=49 pid=5042 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384002332.751:34): auid=1002 uid=1002 gid=1002 ses=4 pid=2973 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384002489.094:40): auid=1000 uid=1000 gid=1000 ses=2 pid=3302 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384012203.553:85): auid=1002 uid=1002 gid=1002 ses=14 pid=3724 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384012307.070:87): auid=1002 uid=1002 gid=1002 ses=14 pid=3763 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384012386.914:90): auid=1002 uid=1002 gid=1002 ses=14 pid=3796 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384012502.927:95): auid=1002 uid=1002 gid=1002 ses=14 pid=3835 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384015664.687:75): auid=1002 uid=1002 gid=1002 ses=4 pid=3161 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384015714.593:78): auid=1002 uid=1002 gid=1002 ses=4 pid=3282 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384015725.454:80): auid=1002 uid=1002 gid=1002 ses=4 pid=3286 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384015731.017:82): auid=1002 uid=1002 gid=1002 ses=4 pid=3290 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384052909.595:97): auid=1002 uid=1002 gid=1002 ses=27 pid=4192 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384054350.725:75): auid=1002 uid=1002 gid=1002 ses=11 pid=3256 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384054452.873:80): auid=1002 uid=1002 gid=1002 ses=11 pid=3297 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384087404.954:74): auid=1000 uid=1000 gid=1000 ses=3 pid=3026 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384087731.824:84): auid=1000 uid=1000 gid=1000 ses=3 pid=3442 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384087840.729:90): auid=1000 uid=1000 gid=1000 ses=3 pid=3522 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384087958.325:94): auid=1002 uid=1002 gid=1002 ses=21 pid=3799 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384100953.629:67): auid=1002 uid=1002 gid=1002 ses=4 pid=2953 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384103367.299:69): auid=1002 uid=1002 gid=1002 ses=7 pid=3062 comm="a.out" reason="memory violation" sig=24
+type=ANOM_ABEND msg=audit(1384103489.171:76): auid=1002 uid=1002 gid=1002 ses=7 pid=3179 comm="a.out" reason="memory violation" sig=24

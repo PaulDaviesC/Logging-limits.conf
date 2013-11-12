@@ -6,10 +6,12 @@ currnoproclog
 currfsizelog
 currnofilelog
 currmemlocklog
+currcputimelog
 prevnoproclog
 prevfsizelog
 prevmemlocklog
 prevnofilelog
+prevcputimelog
 message
 diffop
 !.gitignore

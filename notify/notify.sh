@@ -3,7 +3,7 @@
 
 function send_mail
 {
-	cat $DIR/message | mail -s "[VIOLATION] Limits hit Detected" devs@codelearn.org pauldaviesc@gmail.com -aFrom:mail@ofpiyush.in
+	cat $DIR/message | mail -s "[VIOLATION] Limits hit Detected" devs@codelearn.org pauldaviesc@gmail.com -aFrom:pocha@codelearn.org 
 }
 
 #This function is used to do some opearion during the exit

@@ -3,7 +3,8 @@ The Problem
 
 Linux provides a mechanism to cap the resources of users by specifying the rules in the /etc/security/limits.conf. Unfortunately no logging facility has been provided with the limits.conf when some limits gets hit by a process. This project intends to solve the logging issue by making use of auditd.
 
-The rules are specified in the rules.sh file. Run that file to add the required rules to audit system.
+The rules are specified in the rules.sh file. Run that file to add the
+required rules to linux audit system.
 
 Configure
 =========
@@ -22,7 +23,7 @@ After adding the required rules by running the *rules.sh* the violations can be 
 * fsize : **ausearch -k fsize**
 * nofile : **ausearch -k nofile**
 * memlock : **ausearch -k memlock**
-
+* memlock : **ausearch -k data**
 
 Testing
 =======

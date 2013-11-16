@@ -1,9 +1,17 @@
 The Problem
 ============
 
-Linux provides a mechanism to cap the resources of users by specifying the rules in the /etc/security/limits.conf. Using this facility , some of the resources that can be capped are:
+Linux provides a mechanism to cap the resources of users by specifying the
+rules in the /etc/security/limits.conf. Using this facility , some  resources
+used up by a process can be capped (Please refer man page of limits.conf).
+Unfortunately no logging facility has been provided with the limits.conf. That
+is when a limit gets hit , there is no way the system admin get to know that
+event. So this project intends to solve the logging issue by making using the
+linux audit tools.
 
-* Core file size (core).
+So far I have been able to figure out how to log the violations of following
+resources using linux audit tools.
+
 * Size of the heap (data).
 * Size of the file that can be opened (fsize).
 * Maximum locake in memory address space (memlock).
@@ -11,9 +19,7 @@ Linux provides a mechanism to cap the resources of users by specifying the rules
 * Size of the stack(stack).
 * Maximum CPU time (cpu).
 * Maximum number of processes (nproc).
-* Address space limit (as).
 
-Unfortunately no logging facility has been provided with the limits.conf. So this project intends to solve the logging issue by making use of some tools and may be some tweaking.
 
 Proposed Solution
 =================

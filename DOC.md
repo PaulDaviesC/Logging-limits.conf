@@ -81,7 +81,18 @@ So far only the cpu soft time limit can only be logged. This due to the fact
 that audit system does not log non core dump signals. When a process hits the
 soft limit ,  it gets delivered a SIGXCPU signal and if it gets kiled due to
 that then that  gets logged. However when a process hits hard limit , it
-gets delivered a SIGKILL which will not be logged.
+
+#### Stack (stack)
+
+Whenever a stack limit is violated , the process will be get a SIGSEGV signal
+and terminates unless handled. SIGSEGV can also be delivered to a process when
+it makes an illegal memory access. Usually softwares and commands are made in
+a way not to make  any illegal memoty access. So a command/software gets  , which runs
+without any problems without limits , gets delivered a SIGSEGV , then we can
+say with fair guarantee that it was due to stack limit violation.
+
+So inorder to know whether any program has violated stack limit ,  we will be
+checking the audit log to see whether any programs gets killed by SIGSEGV.
 
 #### Need for tracking setrlimit and plrimit
 

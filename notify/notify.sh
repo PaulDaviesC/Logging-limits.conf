@@ -15,6 +15,7 @@ function finish
 	/bin/cp $DIR/currnofilelog $DIR/prevnofilelog
 	/bin/cp $DIR/currmemlocklog $DIR/prevmemlocklog
 	/bin/cp $DIR/currcputimelog $DIR/prevcputimelog
+	/bin/cp $DIR/currstacklog $DIR/prevstacklog
 	#$sendmail is passed in as an arg. send mail only if it is set to >0.
 	if [[ $1 -gt 0 ]]
 	then
@@ -29,6 +30,17 @@ function main
 	/bin/echo > $DIR/message
 	sendmail=0
 
+	#Checking for  STACK violations. We check whether any new process has been killed by SIGSEGV in audit log.
+	/bin/grep sig=11 /var/log/audit/audit.log > $DIR/currstacklog
+	/usr/bin/diff -N --suppress-common-lines $DIR/currstacklog $DIR/prevstacklog > $DIR/diffop
+	if [[ $? -gt 0 ]] #If new violation has happened from last checkpoint then add it to message.
+	then
+		echo "STACK VIOLATION" >> $DIR/message
+		/usr/bin/awk '{if($2=="type=ANOM_ABEND"){ print $5"\t"$9}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		sendmail=1
+	fi
+
+	#Checking for  CPU time violations. We check whether any new process has been killed by SIGXCPU in audit log.
 	/bin/grep sig=24 /var/log/audit/audit.log > $DIR/currcputimelog
 	/usr/bin/diff -N --suppress-common-lines $DIR/currcputimelog $DIR/prevcputimelog > $DIR/diffop 
 	if [[ $? -gt 0 ]] #If new violation has happened from last checkpoint then add it to message.

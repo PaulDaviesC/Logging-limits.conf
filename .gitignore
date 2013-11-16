@@ -8,12 +8,14 @@ currnofilelog
 currmemlocklog
 currcputimelog
 currstacklog
+currdatalog
 prevnoproclog
 prevfsizelog
 prevmemlocklog
 prevnofilelog
 prevcputimelog
 prevstacklog
+prevdatalog
 message
 diffop
 !.gitignore

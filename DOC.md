@@ -66,7 +66,10 @@ write() | EFBIG
 
 #### Memory lock (memlock)
 
-This restircts the amount of physical memory used up by a process. Some process may require a minimum amount of memory to be in the physical memory. The processes request for locking in the pages to memory using mlock system call family.
+This restircts the amount of physical memory pages that a process can prevent
+from being swapped out. Some process may require a minimum amount of memory to 
+be in the physical memory. The processes request for locking in the pages to memory 
+using mlock system call family.
 
 |System call|ERRNO |
 --- | ---
@@ -80,6 +83,28 @@ munlockall() | ENOMEM
 * auditctl -a exit,always -S mlockall -F exit=-ENOMEM -F success=0 -k memlock
 * auditctl -a exit,always -S munlock -F exit=-ENOMEM -F success=0 -k memlock
 * auditctl -a exit,always -S munlockall -F exit=-ENOMEM -F success=0 -k memlock
+
+#### Data (data)
+
+This restricts the amount of heap a process can use. The heap is allocated to
+a process via mmap ,mmap2 ,munmap and brk system calls. So it these systems
+calls fail with an exit value ENOMEM then that is due to the fact that the
+data limit has been hit.
+
+|System call|ERRNO |
+--- | ---
+mmap() | ENOMEM
+mmap2() | ENOMEM
+munmap() | ENOMEM
+brk() | ENOMEM
+
+##### Rules
+* auditctl -a exit,always -S mmap -F exit=-ENOMEM -F success=0 -k data
+* auditctl -a exit,always -S mmap2 -F exit=-ENOMEM -F success=0 -k data
+* auditctl -a exit,always -S brk -F exit=-ENOMEM -F success=0 -k data
+* auditctl -a exit,always -S munmap -F exit=-ENOMEM -F success=0 -k data
+
+
 
 #### CPU time (cpu)
 

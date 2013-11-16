@@ -16,7 +16,7 @@ function finish
 	/bin/cp $DIR/currmemlocklog $DIR/prevmemlocklog
 	/bin/cp $DIR/currcputimelog $DIR/prevcputimelog
 	/bin/cp $DIR/currstacklog $DIR/prevstacklog
-	/bin/cp $DIR/currdatalog $DIR/prevdatalog
+	/bin/cp $DIR/curraslog $DIR/prevaslog
 	#$sendmail is passed in as an arg. send mail only if it is set to >0.
 	if [[ $1 -gt 0 ]]
 	then
@@ -98,11 +98,11 @@ function main
 	fi
 
 	#If there is data violation add it to message.
-	/sbin/ausearch  -k data -sv no -if /var/log/audit/audit.log  > $DIR/currdatalog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currdatalog $DIR/prevdatalog > $DIR/diffop
+	/sbin/ausearch  -k as -sv no -if /var/log/audit/audit.log  > $DIR/curraslog
+	/usr/bin/diff -N --suppress-common-lines $DIR/curraslog $DIR/prevaslog > $DIR/diffop
 	if [[ $? -gt 0 ]] 
 	then
-		echo "DATA VIOLATION" >> $DIR/message
+		echo "AS VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
 	fi
 

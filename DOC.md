@@ -85,12 +85,11 @@ mmap() | EAGAIN
 * auditctl -a exit,always -S munlockall -F exit=-ENOMEM -F success=0 -k memlock
 * auditctl -a exit,always -S mmap -F exit=-EAGAIN -F success=0 -k memlock
 
-#### Data (data)
+#### Address Space (as)
 
-This restricts the amount of heap a process can use. The heap is allocated to
-a process via mmap ,mmap2 ,munmap and brk system calls. So it these systems
-calls fail with an exit value ENOMEM then that is due to the fact that the
-data limit has been hit.
+The memory is allocated to a process via mmap ,mmap2 ,munmap and brk system calls. 
+So it these systems calls fail with an exit value ENOMEM then that is due to the fact 
+that the as limit has been hit.
 
 |System call|ERRNO |
 --- | ---
@@ -100,10 +99,10 @@ munmap() | ENOMEM
 brk() | ENOMEM
 
 ##### Rules
-* auditctl -a exit,always -S mmap -F exit=-ENOMEM -F success=0 -k data
-* auditctl -a exit,always -S mmap2 -F exit=-ENOMEM -F success=0 -k data
-* auditctl -a exit,always -S brk -F exit=-ENOMEM -F success=0 -k data
-* auditctl -a exit,always -S munmap -F exit=-ENOMEM -F success=0 -k data
+* auditctl -a exit,always -S mmap -F exit=-ENOMEM -F success=0 -k as
+* auditctl -a exit,always -S mmap2 -F exit=-ENOMEM -F success=0 -k as
+* auditctl -a exit,always -S brk -F exit=-ENOMEM -F success=0 -k as
+* auditctl -a exit,always -S munmap -F exit=-ENOMEM -F success=0 -k as
 
 
 

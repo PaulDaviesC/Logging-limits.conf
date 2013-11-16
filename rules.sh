@@ -23,7 +23,7 @@ auditctl -a exit,always -S mmap -F exit=-EAGAIN -F success=0 -k memlock
 
 #data rules. data caps the maximum amount of heap a process can take
 
-auditctl -a exit,always -S mmap -F exit=-ENOMEM -F success=0 -k data
-auditctl -a exit,always -S mmap2 -F exit=-ENOMEM -F success=0 -k data
-auditctl -a exit,always -S munmap -F exit=-ENOMEM -F success=0 -k data
-auditctl -a exit,always -S brk -F exit=-ENOMEM -F success=0 -k data
+auditctl -a exit,always -S mmap -F exit=-ENOMEM -F success=0 -k as
+auditctl -a exit,always -S mmap2 -F exit=-ENOMEM -F success=0 -k as
+auditctl -a exit,always -S munmap -F exit=-ENOMEM -F success=0 -k as
+auditctl -a exit,always -S brk -F exit=-ENOMEM -F success=0 -k as

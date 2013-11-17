@@ -23,7 +23,7 @@ After adding the required rules by running the *rules.sh* the violations can be 
 * fsize : **ausearch -k fsize**
 * nofile : **ausearch -k nofile**
 * memlock : **ausearch -k memlock**
-* data : **ausearch -k as**
+* as : **ausearch -k as**
 
 Testing
 =======

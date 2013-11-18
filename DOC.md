@@ -111,7 +111,11 @@ brk() | ENOMEM
 So far only the cpu soft time limit can only be logged. This due to the fact
 that audit system does not log non core dump signals. When a process hits the
 soft limit ,  it gets delivered a SIGXCPU signal and if it gets kiled due to
-that then that  gets logged. However when a process hits hard limit , it
+that then that  gets logged. However when a process hits hard limit , it gets
+delivered a SIGKILL signal and nothing is logged.
+
+*Note* : No specific rules has to be written in audit to make it log the
+SIGXCPU signal.
 
 #### Stack (stack)
 
@@ -124,6 +128,9 @@ say with fair guarantee that it was due to stack limit violation.
 
 So inorder to know whether any program has violated stack limit ,  we will be
 checking the audit log to see whether any programs gets killed by SIGSEGV.
+
+*Note* : No specific rules has to be written in audit to make it log the
+SIGXCPU signal.
 
 #### Need for tracking setrlimit and plrimit
 

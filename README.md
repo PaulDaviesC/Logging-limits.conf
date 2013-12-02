@@ -25,6 +25,11 @@ After adding the required rules by running the *rules.sh* the violations can be 
 * memlock : **ausearch -k memlock**
 * as : **ausearch -k as**
 
+We are also tracking setrlimit. This is required since we want to get informed
+on failed attempts of user process to raise the limits.
+
+* setrlimit : **ausearch -k rlimit**
+
 Testing
 =======
 In order to test the validity of rules kindly refer to tests/README.md.

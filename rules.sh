@@ -21,7 +21,7 @@ auditctl -a exit,always -S munlock -F exit=-ENOMEM -F success=0 -k memlock
 auditctl -a exit,always -S munlockall -F exit=-ENOMEM -F success=0 -k memlock
 auditctl -a exit,always -S mmap -F exit=-EAGAIN -F success=0 -k memlock
 
-#data rules. data caps the maximum amount of heap a process can take
+#as rules. as caps the maximum amount of virtual address space a process can take
 
 auditctl -a exit,always -S mmap -F exit=-ENOMEM -F success=0 -k as
 auditctl -a exit,always -S mmap2 -F exit=-ENOMEM -F success=0 -k as

@@ -33,8 +33,9 @@ function main
 
 	#Checking for  STACK violations. We check whether any new process has been killed by SIGSEGV in audit log.
 	/bin/grep sig=11 /var/log/audit/audit.log > $DIR/currstacklog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currstacklog $DIR/prevstacklog > $DIR/diffop
-	if [[ $? -gt 0 ]] #If new violation has happened from last checkpoint then add it to message.
+	/usr/bin/diff -N --suppress-common-lines $DIR/currstacklog $DIR/prevstacklog | grep '^<' > $DIR/diffop 
+
+	if [[ $? -eq 0 ]] #If new violation has happened from last checkpoint then add it to message.
 	then
 		echo "STACK VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=ANOM_ABEND"){ print $5"\t"$9}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
@@ -43,8 +44,9 @@ function main
 
 	#Checking for  CPU time violations. We check whether any new process has been killed by SIGXCPU in audit log.
 	/bin/grep sig=24 /var/log/audit/audit.log > $DIR/currcputimelog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currcputimelog $DIR/prevcputimelog > $DIR/diffop 
-	if [[ $? -gt 0 ]] #If new violation has happened from last checkpoint then add it to message.
+	/usr/bin/diff -N --suppress-common-lines $DIR/currcputimelog $DIR/prevcputimelog | grep '^<' > $DIR/diffop 
+
+	if [[ $? -eq 0 ]] #If new violation has happened from last checkpoint then add it to message.
 	then
 		echo "SOFT CPU TIME VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=ANOM_ABEND"){ print $5"\t"$9}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
@@ -53,8 +55,8 @@ function main
 
 	/sbin/aureport -x --failed --summary  -i -if /var/log/audit/audit.log > $DIR/currop
 	#Check the for the system calls that has failed.Take the diffs of the current and previous output to see whether a new violation has happened from last check point.
-	/usr/bin/diff -N --suppress-common-lines $DIR/currop $DIR/prevop > $DIR/diffop 
-	if [[ $? -eq 0 ]] #If no new violation has happened from last checkpoint then exit.
+	/usr/bin/diff -N --suppress-common-lines $DIR/currop $DIR/prevop | grep '^<' > $DIR/diffop 
+	if [[ $? -gt 0 ]] #If no new violation has happened from last checkpoint then exit.
 	then
 		finish $sendmail
 		exit
@@ -63,8 +65,9 @@ function main
 
 	#If there is fsize violation add it to message.
 	/sbin/ausearch  -k fsize -sv no -if /var/log/audit/audit.log  > $DIR/currfsizelog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currfsizelog $DIR/prevfsizelog > $DIR/diffop
-	if [[ $? -gt 0 ]] 
+	/usr/bin/diff -N --suppress-common-lines $DIR/currfsizelog $DIR/prevfsizelog | grep '^<' > $DIR/diffop
+
+	if [[ $? -eq 0 ]] 
 	then
 		echo "FILE SIZE VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
@@ -72,8 +75,9 @@ function main
 
 	#If there is a noproc violation add it to message.
 	/sbin/ausearch  -k noproc -sv no -if /var/log/audit/audit.log > $DIR/currnoproclog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currnoproclog $DIR/prevnoproclog > $DIR/diffop
-	if [[ $? -gt 0 ]] 
+	/usr/bin/diff -N --suppress-common-lines $DIR/currnoproclog $DIR/prevnoproclog | grep '^<' > $DIR/diffop
+
+	if [[ $? -eq 0 ]] 
 	then
 		echo "PROCESS NUMBER VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
@@ -81,8 +85,9 @@ function main
 
 	#If there is a nofile violation add it to message.
 	/sbin/ausearch  -k nofile -sv no -if /var/log/audit/audit.log > $DIR/currnofilelog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currnofilelog $DIR/prevnofilelog > $DIR/diffop
-	if [[ $? -gt 0 ]] 
+	/usr/bin/diff -N --suppress-common-lines $DIR/currnofilelog $DIR/prevnofilelog | grep '^<' > $DIR/diffop
+
+	if [[ $? -eq 0 ]] 
 	then
 		echo "NUMBER OF FILES VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
@@ -90,8 +95,9 @@ function main
 
 	#If there is a memlock violation add it to message.
 	/sbin/ausearch  -k memlock -sv no -if /var/log/audit/audit.log > $DIR/currmemlocklog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currmemlocklog $DIR/prevmemlocklog > $DIR/diffop
-	if [[ $? -gt 0 ]] 
+	/usr/bin/diff -N --suppress-common-lines $DIR/currmemlocklog $DIR/prevmemlocklog | grep '^<' > $DIR/diffop
+
+	if [[ $? -eq 0 ]] 
 	then
 		echo "MEMLOCK VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop |/usr/bin/sort |/usr/bin/uniq -c  >> $DIR/message
@@ -99,8 +105,9 @@ function main
 
 	#If there is data violation add it to message.
 	/sbin/ausearch  -k as -sv no -if /var/log/audit/audit.log  > $DIR/curraslog
-	/usr/bin/diff -N --suppress-common-lines $DIR/curraslog $DIR/prevaslog > $DIR/diffop
-	if [[ $? -gt 0 ]] 
+	/usr/bin/diff -N --suppress-common-lines $DIR/curraslog $DIR/prevaslog | grep '^<' > $DIR/diffop
+
+	if [[ $? -eq 0 ]] 
 	then
 		echo "AS VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message

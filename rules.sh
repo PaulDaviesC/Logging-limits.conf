@@ -27,3 +27,8 @@ auditctl -a exit,always -S mmap -F exit=-ENOMEM -F success=0 -k as
 auditctl -a exit,always -S mmap2 -F exit=-ENOMEM -F success=0 -k as
 auditctl -a exit,always -S munmap -F exit=-ENOMEM -F success=0 -k as
 auditctl -a exit,always -S brk -F exit=-ENOMEM -F success=0 -k as
+
+#We are observing the setrlimit and prlimit system calls to see whether they
+#lead to any hits.
+auditctl -a exit,always -S setrlimit -F exit=-EINVAL -F success=0 -k rlimit
+auditctl -a exit,always -S setrlimit -F exit=-EPERM -F success=0 -k rlimit

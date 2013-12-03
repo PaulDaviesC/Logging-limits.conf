@@ -10,6 +10,7 @@ currcputimelog
 currstacklog
 currdatalog
 curraslog
+currrlimitlog
 prevnoproclog
 prevfsizelog
 prevmemlocklog
@@ -18,6 +19,7 @@ prevcputimelog
 prevstacklog
 prevdatalog
 prevaslog
+prevrlimitlog
 message
 diffop
 !.gitignore

@@ -17,6 +17,8 @@ function finish
 	/bin/cp $DIR/currcputimelog $DIR/prevcputimelog
 	/bin/cp $DIR/currstacklog $DIR/prevstacklog
 	/bin/cp $DIR/curraslog $DIR/prevaslog
+	/bin/cp $DIR/currrlimitlog $DIR/prevrlimitlog
+
 	#$sendmail is passed in as an arg. send mail only if it is set to >0.
 	if [[ $1 -gt 0 ]]
 	then
@@ -54,7 +56,7 @@ function main
 	fi
 
 	/sbin/aureport -x --failed --summary  -i -if /var/log/audit/audit.log > $DIR/currop
-	#Check the for the system calls that has failed.Take the diffs of the current and previous output to see whether a new violation has happened from last check point.
+	#Check  for the system calls that has failed.Take the diffs of the current and previous output to see whether a new violation has happened from last check point.
 	/usr/bin/diff -N --suppress-common-lines $DIR/currop $DIR/prevop | grep '^<' > $DIR/diffop 
 	if [[ $? -gt 0 ]] #If no new violation has happened from last checkpoint then exit.
 	then
@@ -103,7 +105,7 @@ function main
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop |/usr/bin/sort |/usr/bin/uniq -c  >> $DIR/message
 	fi
 
-	#If there is data violation add it to message.
+	#If there is as violation add it to message.
 	/sbin/ausearch  -k as -sv no -if /var/log/audit/audit.log  > $DIR/curraslog
 	/usr/bin/diff -N --suppress-common-lines $DIR/curraslog $DIR/prevaslog | grep '^<' > $DIR/diffop
 
@@ -113,6 +115,15 @@ function main
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
 	fi
 
+	#If there is a failed setrlimit violation add it to message.
+	/sbin/ausearch  -k rlimit -sv no -if /var/log/audit/audit.log  > $DIR/currrlimitlog
+	/usr/bin/diff -N --suppress-common-lines $DIR/currrlimitlog $DIR/prevrlimitlog | grep '^<' > $DIR/diffop
+
+	if [[ $? -eq 0 ]] 
+	then
+		echo "RLIMIT VIOLATION" >> $DIR/message
+		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";printf $27"\t";print $8 }}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+	fi
 
 	#Now the report is in message file.We will be sending the mail with message as body.
 	finish $sendmail

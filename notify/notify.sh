@@ -112,7 +112,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "AS VIOLATION" >> $DIR/message
-		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $28}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
 	fi
 
 	#If there is a failed setrlimit violation add it to message.

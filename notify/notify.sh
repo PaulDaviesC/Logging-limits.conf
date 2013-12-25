@@ -63,7 +63,6 @@ function main
 		finish $sendmail
 		exit
 	fi
-	sendmail=1
 
 	#If there is fsize violation add it to message.
 	/sbin/ausearch  -k fsize -sv no -if /var/log/audit/audit.log  > $DIR/currfsizelog
@@ -73,6 +72,7 @@ function main
 	then
 		echo "FILE SIZE VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		sendmail=1
 	fi
 
 	#If there is a noproc violation add it to message.
@@ -83,6 +83,7 @@ function main
 	then
 		echo "PROCESS NUMBER VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		sendmail=1
 	fi
 
 	#If there is a nofile violation add it to message.
@@ -93,6 +94,7 @@ function main
 	then
 		echo "NUMBER OF FILES VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		sendmail=1
 	fi
 
 	#If there is a memlock violation add it to message.
@@ -103,6 +105,7 @@ function main
 	then
 		echo "MEMLOCK VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop |/usr/bin/sort |/usr/bin/uniq -c  >> $DIR/message
+		sendmail=1
 	fi
 
 	#If there is as violation add it to message.
@@ -113,6 +116,7 @@ function main
 	then
 		echo "AS VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $28}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		sendmail=1
 	fi
 
 	#If there is a failed setrlimit violation add it to message.
@@ -123,6 +127,7 @@ function main
 	then
 		echo "RLIMIT VIOLATION" >> $DIR/message
 		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";printf $27"\t";print $8 }}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		sendmail=1
 	fi
 
 	#Now the report is in message file.We will be sending the mail with message as body.

@@ -35,7 +35,7 @@ function main
 
 	#Checking for  STACK violations. We check whether any new process has been killed by SIGSEGV in audit log.
 	/bin/grep sig=11 /var/log/audit/audit.log > $DIR/currstacklog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currstacklog $DIR/prevstacklog | grep '^<' > $DIR/diffop 
+	/usr/bin/diff -N --suppress-common-lines $DIR/currstacklog $DIR/prevstacklog | grep '^< type=ANOM_ABEND' > $DIR/diffop 
 
 	if [[ $? -eq 0 ]] #If new violation has happened from last checkpoint then add it to message.
 	then
@@ -46,7 +46,7 @@ function main
 
 	#Checking for  CPU time violations. We check whether any new process has been killed by SIGXCPU in audit log.
 	/bin/grep sig=24 /var/log/audit/audit.log > $DIR/currcputimelog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currcputimelog $DIR/prevcputimelog | grep '^<' > $DIR/diffop 
+	/usr/bin/diff -N --suppress-common-lines $DIR/currcputimelog $DIR/prevcputimelog | grep '^< type=ANOM_ABEND' > $DIR/diffop 
 
 	if [[ $? -eq 0 ]] #If new violation has happened from last checkpoint then add it to message.
 	then

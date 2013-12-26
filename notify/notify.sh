@@ -1,11 +1,52 @@
-#!/bin/bash
+#!bin/bash
 #This program sends mail when some new violations happen. Put this script to the crontab of the root user. We collect the report to "message" file and  this file is sent as the body of the mail. Mutt must be configure for the root user.
 
 function send_mail
 {
 	cat $DIR/message | mail -s "[VIOLATION] Limits hit Detected" devs@codelearn.org pauldaviesc@gmail.com -aFrom:pocha@codelearn.org 
 }
+function getParent
+{
+	/sbin/ausearch -e $1 -k clone | grep 'type=SYSCALL' >$DIR/op
+	nolines=`cat $DIR/op | wc -l`
+	j=1;
+	#Select the right log line of the argument process so that we can get the parent process id.
+	while [ $j -le $nolines ]
+	do
+		i=`tail -n $j $DIR/op | head -n 1`
+		TS=`echo $i| cut -d ' ' -f2 | cut -d '.' -f1 | cut -d '(' -f2`
+		if [[ $2 -ge $TS ]]
+		then
+			echo  parent_`echo $i | cut -d ' ' -f25` parent_`echo $i | cut -d ' ' -f26`
+			break
+		else
+			let "j=$j+1"
+		fi
+	done 
+}
+function preprocess
+{
+	while read i
+	do
+		if [[ $1 -eq 0 ]] #If process failed due to stack/cpu (core dump signal)
+		then
+			echo -n $i | /usr/bin/awk '{printf $4"\t"$9"\t"}'
+			#Get the pid of the process that has failed
+			pid=`echo $i | cut -d ' ' -f8 | cut -d '=' -f2`
+			#Get the time stamp of the failed event
+			TS=`echo $i | cut -d ' ' -f3 | cut -d '.' -f1 | cut -d '(' -f2`
+		elif [[ $1 -eq 1 ]] #if process failure due to sys call
+		then
+			echo -n  $i | /usr/bin/awk '{printf $16"\t"$27"\t"}' 	
+			#Get the pid of the process that has failed
+			pid=`echo $i | cut -d ' ' -f14 | cut -d '=' -f2`
+			#Get the time stamp of the failed event
+			TS=`echo $i | cut -d ' ' -f3 | cut -d '.' -f1 | cut -d '(' -f2`
 
+		fi
+		getParent $pid $TS
+	done < $DIR/diffop
+}
 #This function is used to do some opearion during the exit
 function finish
 {
@@ -40,7 +81,7 @@ function main
 	if [[ $? -eq 0 ]] #If new violation has happened from last checkpoint then add it to message.
 	then
 		echo "STACK VIOLATION" >> $DIR/message
-		/usr/bin/awk '{if($2=="type=ANOM_ABEND"){ print $5"\t"$9}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		preprocess 0 | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
 		sendmail=1
 	fi
 
@@ -51,7 +92,7 @@ function main
 	if [[ $? -eq 0 ]] #If new violation has happened from last checkpoint then add it to message.
 	then
 		echo "SOFT CPU TIME VIOLATION" >> $DIR/message
-		/usr/bin/awk '{if($2=="type=ANOM_ABEND"){ print $5"\t"$9}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		preprocess 0| /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
 		sendmail=1
 	fi
 
@@ -66,67 +107,67 @@ function main
 
 	#If there is fsize violation add it to message.
 	/sbin/ausearch  -k fsize -sv no -if /var/log/audit/audit.log  > $DIR/currfsizelog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currfsizelog $DIR/prevfsizelog | grep '^<' > $DIR/diffop
+	/usr/bin/diff -N --suppress-common-lines $DIR/currfsizelog $DIR/prevfsizelog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 
 	then
 		echo "FILE SIZE VIOLATION" >> $DIR/message
-		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		preprocess 1 | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
 		sendmail=1
 	fi
 
 	#If there is a noproc violation add it to message.
 	/sbin/ausearch  -k noproc -sv no -if /var/log/audit/audit.log > $DIR/currnoproclog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currnoproclog $DIR/prevnoproclog | grep '^<' > $DIR/diffop
+	/usr/bin/diff -N --suppress-common-lines $DIR/currnoproclog $DIR/prevnoproclog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 
 	then
 		echo "PROCESS NUMBER VIOLATION" >> $DIR/message
-		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		preprocess 1 | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
 		sendmail=1
 	fi
 
 	#If there is a nofile violation add it to message.
 	/sbin/ausearch  -k nofile -sv no -if /var/log/audit/audit.log > $DIR/currnofilelog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currnofilelog $DIR/prevnofilelog | grep '^<' > $DIR/diffop
+	/usr/bin/diff -N --suppress-common-lines $DIR/currnofilelog $DIR/prevnofilelog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 
 	then
 		echo "NUMBER OF FILES VIOLATION" >> $DIR/message
-		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		preprocess 1  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
 	#If there is a memlock violation add it to message.
 	/sbin/ausearch  -k memlock -sv no -if /var/log/audit/audit.log > $DIR/currmemlocklog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currmemlocklog $DIR/prevmemlocklog | grep '^<' > $DIR/diffop
+	/usr/bin/diff -N --suppress-common-lines $DIR/currmemlocklog $DIR/prevmemlocklog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 
 	then
 		echo "MEMLOCK VIOLATION" >> $DIR/message
-		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $27}}' $DIR/diffop |/usr/bin/sort |/usr/bin/uniq -c  >> $DIR/message
+		preprocess 1 |/usr/bin/sort |/usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
 	#If there is as violation add it to message.
 	/sbin/ausearch  -k as -sv no -if /var/log/audit/audit.log  > $DIR/curraslog
-	/usr/bin/diff -N --suppress-common-lines $DIR/curraslog $DIR/prevaslog | grep '^<' > $DIR/diffop
+	/usr/bin/diff -N --suppress-common-lines $DIR/curraslog $DIR/prevaslog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 
 	then
 		echo "AS VIOLATION" >> $DIR/message
-		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";print $28}}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		preprocess 1 |/usr/bin/sort |/usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
 	#If there is a failed setrlimit violation add it to message.
 	/sbin/ausearch  -k rlimit -sv no -if /var/log/audit/audit.log  > $DIR/currrlimitlog
-	/usr/bin/diff -N --suppress-common-lines $DIR/currrlimitlog $DIR/prevrlimitlog | grep '^<' > $DIR/diffop
+	/usr/bin/diff -N --suppress-common-lines $DIR/currrlimitlog $DIR/prevrlimitlog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 
 	then
 		echo "RLIMIT VIOLATION" >> $DIR/message
-		/usr/bin/awk '{if($2=="type=SYSCALL"){printf $16"\t";printf $27"\t";print $8 }}' $DIR/diffop | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		preprocess 1 |/usr/bin/sort |/usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 

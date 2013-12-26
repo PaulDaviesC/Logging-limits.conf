@@ -22,4 +22,5 @@ prevaslog
 prevrlimitlog
 message
 diffop
+op
 !.gitignore

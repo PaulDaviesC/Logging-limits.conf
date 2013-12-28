@@ -1,3 +1,6 @@
+#predecessors.sh is used to get the details of the all possible predecessors
+#that has been logged in the audit log. It takes input as the PID and TIME
+#STAMP that you got in the notification mail.
 function getParent
 {
 	/sbin/ausearch -e $1 -k clone | grep 'type=SYSCALL' >$DIR/op

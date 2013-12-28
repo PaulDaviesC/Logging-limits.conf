@@ -17,7 +17,7 @@ function getParent
 		TS=`echo $i| cut -d ' ' -f2 | cut -d '.' -f1 | cut -d '(' -f2`
 		if [[ $2 -ge $TS ]]
 		then
-			echo  Time Stamp=$TS parent_`echo $i | cut -d ' ' -f25` parent_`echo $i | cut -d ' ' -f26`
+			echo  pid=$1 Time Stamp=$TS parent_`echo $i | cut -d ' ' -f25` parent_`echo $i | cut -d ' ' -f26`
 			break
 		else
 			let "j=$j+1"

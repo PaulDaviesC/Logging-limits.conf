@@ -14,8 +14,8 @@ function getParent
 	while [ $j -le $nolines ]
 	do
 		i=`tail -n $j $DIR/op | head -n 1`
-		TS=`echo $i| cut -d ' ' -f2 | cut -d '.' -f1 | cut -d '(' -f2`
-		if [[ $2 -ge $TS ]]
+		TS=`echo $i| cut -d ' ' -f2 | cut -d '(' -f2 | cut -d ':' -f1`
+		if [[ `expr $2 '>=' $TS` -eq 1 ]]
 		then
 			echo  pid=$1 Time Stamp=$TS parent_`echo $i | cut -d ' ' -f25` parent_`echo $i | cut -d ' ' -f26`
 			break

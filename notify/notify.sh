@@ -7,7 +7,7 @@ function send_mail
 }
 function getParent
 {
-	/sbin/ausearch -e $1 -k clone | grep 'type=SYSCALL' >$DIR/op
+	/sbin/ausearch -e $1 -k noproc | grep 'type=SYSCALL' >$DIR/op
 	nolines=`cat $DIR/op | wc -l`
 	j=1;
 	#Select the right log line of the argument process so that we can get the parent process id.
@@ -117,7 +117,7 @@ function main
 	fi
 
 	#If there is a noproc violation add it to message.
-	/sbin/ausearch  -k noproc -sv no -if /var/log/audit/audit.log > $DIR/currnoproclog
+	/sbin/ausearch -e -EAGAIN -k noproc -sv no -if /var/log/audit/audit.log > $DIR/currnoproclog
 	/usr/bin/diff -N --suppress-common-lines $DIR/currnoproclog $DIR/prevnoproclog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 

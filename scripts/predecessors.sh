@@ -3,7 +3,7 @@
 #STAMP that you got in the notification mail.
 function getParent
 {
-	/sbin/ausearch -e $1 -k clone | grep 'type=SYSCALL' >$DIR/op
+	/sbin/ausearch -e $1 -k noproc | grep 'type=SYSCALL' >$DIR/op
 	nolines=`cat $DIR/op | wc -l`
 	j=1;
 	#Select the right log line of the argument process so that we can get the parent process id.
@@ -15,7 +15,7 @@ function getParent
 			echo
 			echo -------Child of-------
 			echo
-			echo `echo $i | cut -d ' ' -f14` `echo $i | cut -d ' ' -f15` `echo $i | cut -d ' ' -f25`  `echo $i | cut -d ' ' -f26`
+			echo `echo $i | cut -d ' ' -f13` `echo $i | cut -d ' ' -f14` `echo $i | cut -d ' ' -f15` `echo $i | cut -d ' ' -f25` `echo $i | cut -d ' ' -f26` Time_Stamp=`echo $i | cut -d ' ' -f2 | cut -d '.' -f1 | cut -d '(' -f2`
 			getParent `echo $i | cut -d ' ' -f13| cut -d '=' -f2` `echo $i| cut -d ' ' -f2 | cut -d '.' -f1 | cut -d '(' -f2`
 			break
 		else

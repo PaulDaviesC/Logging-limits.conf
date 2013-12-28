@@ -11,13 +11,13 @@ function getParent
 	do
 		i=`tail -n $j $DIR/op | head -n 1`
 		TS=`echo $i | cut -d ' ' -f2 | cut -d '(' -f2 | cut -d ':' -f1`
-		if [ `expr $2 '<=' $TS` -eq 1 ]
+		if [ `expr $2 '>=' $TS` -eq 1 ]
 		then
 			echo
 			echo -------Child of-------
 			echo
 			echo `echo $i | cut -d ' ' -f13` `echo $i | cut -d ' ' -f14` `echo $i | cut -d ' ' -f15` `echo $i | cut -d ' ' -f25` `echo $i | cut -d ' ' -f26` Time_Stamp=$TS
-			getParent `echo $i | cut -d ' ' -f13| cut -d '=' -f2` `echo $i| cut -d ' ' -f2 | cut -d '.' -f1 | cut -d '(' -f2`
+			getParent `echo $i | cut -d ' ' -f13| cut -d '=' -f2` $TS
 			break
 		else
 			let "j=$j+1"

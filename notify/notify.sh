@@ -15,7 +15,7 @@ function getParent
 	do
 		i=`tail -n $j $DIR/op | head -n 1`
 		TS=`echo $i| cut -d ' ' -f2 | cut -d '(' -f2 | cut -d ':' -f1`
-		if [[ `expr $2 '>=' $TS` -eq 1 ]]
+		if [ `expr $2 '>=' $TS` -eq 1 ]
 		then
 			echo  pid=$1 Time Stamp=$TS parent_`echo $i | cut -d ' ' -f25` parent_`echo $i | cut -d ' ' -f26`
 			break
@@ -33,17 +33,14 @@ function preprocess
 			echo -n $i | /usr/bin/awk '{printf $4"\t"$9"\t"}'
 			#Get the pid of the process that has failed
 			pid=`echo $i | cut -d ' ' -f8 | cut -d '=' -f2`
-			#Get the time stamp of the failed event
-			TS=`echo $i | cut -d ' ' -f3 | cut -d '.' -f1 | cut -d '(' -f2`
 		elif [[ $1 -eq 1 ]] #if process failure due to sys call
 		then
 			echo -n  $i | /usr/bin/awk '{printf $16"\t"$27"\t"}' 	
 			#Get the pid of the process that has failed
 			pid=`echo $i | cut -d ' ' -f14 | cut -d '=' -f2`
-			#Get the time stamp of the failed event
-			TS=`echo $i | cut -d ' ' -f3 | cut -d '.' -f1 | cut -d '(' -f2`
-
 		fi
+		#Get the time stamp of the failed event
+		TS=`echo $i | cut -d ' ' -f3 | cut -d '(' -f2 | cut -d ':' -f1`
 		getParent $pid $TS
 	done < $DIR/diffop
 }

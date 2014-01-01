@@ -7,22 +7,8 @@ function send_mail
 }
 function getParent
 {
-	/sbin/ausearch -e $1 -k noproc | grep 'type=SYSCALL' >$DIR/op
-	nolines=`cat $DIR/op | wc -l`
-	j=1;
-	#Select the right log line of the argument process so that we can get the parent process id.
-	while [ $j -le $nolines ]
-	do
-		i=`tail -n $j $DIR/op | head -n 1`
-		TS=`echo $i| cut -d ' ' -f2 | cut -d '(' -f2 | cut -d ':' -f1`
-		if [ `expr $2 '>=' $TS` -eq 1 ]
-		then
-			echo  pid=$1 Time Stamp=$TS parent_`echo $i | cut -d ' ' -f25` parent_`echo $i | cut -d ' ' -f26`
-			break
-		else
-			let "j=$j+1"
-		fi
-	done 
+	/sbin/ausearch -e $1 -k noproc  >$DIR/op
+	python preprocess.py $DIR/op $1 $2
 }
 function preprocess
 {
@@ -78,7 +64,7 @@ function main
 	if [[ $? -eq 0 ]] #If new violation has happened from last checkpoint then add it to message.
 	then
 		echo "STACK VIOLATION" >> $DIR/message
-		preprocess 0 | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		python preprocess.py $DIR/diffop $DIR/op 0  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -89,7 +75,7 @@ function main
 	if [[ $? -eq 0 ]] #If new violation has happened from last checkpoint then add it to message.
 	then
 		echo "SOFT CPU TIME VIOLATION" >> $DIR/message
-		preprocess 0| /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		python preprocess.py $DIR/diffop $DIR/op 0  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -109,7 +95,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "FILE SIZE VIOLATION" >> $DIR/message
-		preprocess 1 | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		python preprocess.py $DIR/diffop $DIR/op 1  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -120,7 +106,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "PROCESS NUMBER VIOLATION" >> $DIR/message
-		preprocess 1 | /usr/bin/sort | /usr/bin/uniq -c >> $DIR/message
+		python preprocess.py $DIR/diffop $DIR/op 1  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -131,7 +117,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "NUMBER OF FILES VIOLATION" >> $DIR/message
-		preprocess 1  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		python preprocess.py $DIR/diffop $DIR/op 1  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -142,7 +128,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "MEMLOCK VIOLATION" >> $DIR/message
-		preprocess 1 |/usr/bin/sort |/usr/bin/uniq -c  >> $DIR/message
+		python preprocess.py $DIR/diffop $DIR/op 1  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -153,7 +139,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "AS VIOLATION" >> $DIR/message
-		preprocess 1 |/usr/bin/sort |/usr/bin/uniq -c  >> $DIR/message
+		python preprocess.py $DIR/diffop $DIR/op 1  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -164,7 +150,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "RLIMIT VIOLATION" >> $DIR/message
-		preprocess 1 |/usr/bin/sort |/usr/bin/uniq -c  >> $DIR/message
+		python preprocess.py $DIR/diffop $DIR/op 1  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 

@@ -39,7 +39,7 @@ function main
 	if [[ $? -eq 0 ]] #If new violation has happened from last checkpoint then add it to message.
 	then
 		echo "STACK VIOLATION" >> $DIR/message
-		python preprocess.py $DIR/diffop $DIR/op 0 $num_logs | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		python $DIR/preprocess.py $DIR/diffop $DIR/op 0 $num_logs | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -50,7 +50,7 @@ function main
 	if [[ $? -eq 0 ]] #If new violation has happened from last checkpoint then add it to message.
 	then
 		echo "SOFT CPU TIME VIOLATION" >> $DIR/message
-		python preprocess.py $DIR/diffop $DIR/op 0  $num_logs | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		python $DIR/preprocess.py $DIR/diffop $DIR/op 0  $num_logs | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -70,7 +70,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "FILE SIZE VIOLATION" >> $DIR/message
-		python preprocess.py $DIR/diffop $DIR/op 1 $num_logs  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		python $DIR/preprocess.py $DIR/diffop $DIR/op 1 $num_logs  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -81,7 +81,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "PROCESS NUMBER VIOLATION" >> $DIR/message
-		python preprocess.py $DIR/diffop $DIR/op 1  $num_logs | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		python $DIR/preprocess.py $DIR/diffop $DIR/op 1  $num_logs | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -92,7 +92,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "NUMBER OF FILES VIOLATION" >> $DIR/message
-		python preprocess.py $DIR/diffop $DIR/op 1 $num_logs   | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		python $DIR/preprocess.py $DIR/diffop $DIR/op 1 $num_logs   | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -103,7 +103,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "MEMLOCK VIOLATION" >> $DIR/message
-		python preprocess.py $DIR/diffop $DIR/op 1  $num_logs | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		python $DIR/preprocess.py $DIR/diffop $DIR/op 1  $num_logs | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -114,7 +114,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "AS VIOLATION" >> $DIR/message
-		python preprocess.py $DIR/diffop $DIR/op 1  $num_logs | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		python $DIR/preprocess.py $DIR/diffop $DIR/op 1  $num_logs | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
@@ -125,7 +125,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "RLIMIT VIOLATION" >> $DIR/message
-		python preprocess.py $DIR/diffop $DIR/op 1 $num_logs  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		python $DIR/preprocess.py $DIR/diffop $DIR/op 1 $num_logs  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 

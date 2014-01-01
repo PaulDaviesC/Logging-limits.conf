@@ -5,31 +5,6 @@ function send_mail
 {
 	cat $DIR/message | mail -s "[VIOLATION] Limits hit Detected" devs@codelearn.org pauldaviesc@gmail.com -aFrom:pocha@codelearn.org 
 }
-function getParent
-{
-	/sbin/ausearch -e $1 -k noproc  >$DIR/op
-	python preprocess.py $DIR/op $1 $2
-}
-function preprocess
-{
-	while read i
-	do
-		if [[ $1 -eq 0 ]] #If process failed due to stack/cpu (core dump signal)
-		then
-			echo -n $i | /usr/bin/awk '{printf $4"\t"$9"\t"}'
-			#Get the pid of the process that has failed
-			pid=`echo $i | cut -d ' ' -f8 | cut -d '=' -f2`
-		elif [[ $1 -eq 1 ]] #if process failure due to sys call
-		then
-			echo -n  $i | /usr/bin/awk '{printf $16"\t"$27"\t"}' 	
-			#Get the pid of the process that has failed
-			pid=`echo $i | cut -d ' ' -f14 | cut -d '=' -f2`
-		fi
-		#Get the time stamp of the failed event
-		TS=`echo $i | cut -d ' ' -f3 | cut -d '(' -f2 | cut -d ':' -f1`
-		getParent $pid $TS
-	done < $DIR/diffop
-}
 #This function is used to do some opearion during the exit
 function finish
 {

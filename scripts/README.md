@@ -25,3 +25,9 @@ pid=12362 auid=0 uid=0 comm="user-creation.s" exe="/bin/bash" Time_Stamp=1388630
 -------Child of-------
 
 pid=12719 auid=0 uid=0 comm="ruby" exe="/usr/local/rvm/rubies/ruby-1.9.3-p194/bin/ruby" Time_Stamp=1388630452.081
+
+#####Interpretation of Output
+
+The above output can be interpreted as :The immediate parent of 12378 with
+time stamp ts 1388630455.801 is the command adduser. The parent of adduser is
+user-creation.s and the latters parent is ruby.

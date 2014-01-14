@@ -3,9 +3,9 @@ Predecessors
 
 Some times the information of immediate parent may not be that useful and we
 need to gather the details of the processes which are higher up in the process
-tree. The **predecessor.sh** can be used exactly for that purpose. The 
+tree. The **predecessor.py** can be used exactly for that purpose. The 
 notification mail lists the for each violation  PID of the process that caused
-the violation and a time stamp\*. The predecessors.sh take the arguments as
+the violation and a time stamp\*. The predecessors.py take the arguments as
 the PID and the time stamp and lists all possible predecessors with immediate
 predecessor first. 
 
@@ -16,7 +16,7 @@ PID can be allocated to another process.
 
 #### Sample Output
 
-Command : **sudo bash predecessors.sh 12378 1388630455.801**
+Command : **sudo python predecessors.py 12378 1388630455.801**
 
 #####Output
 

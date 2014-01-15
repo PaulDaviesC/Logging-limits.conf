@@ -64,7 +64,7 @@ function main
 	fi
 
 	#If there is fsize violation add it to message.
-	/sbin/ausearch  -k fsize -sv no -if /var/log/audit/audit.log  > $DIR/currfsizelog
+	/sbin/ausearch  -k fsize -sv no -if /var/log/audit/audit.log 2>/dev/null > $DIR/currfsizelog
 	/usr/bin/diff -N --suppress-common-lines $DIR/currfsizelog $DIR/prevfsizelog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 
@@ -75,7 +75,7 @@ function main
 	fi
 
 	#If there is a noproc violation add it to message.
-	/sbin/ausearch -e -EAGAIN -k noproc -sv no -if /var/log/audit/audit.log > $DIR/currnoproclog
+	/sbin/ausearch -e -EAGAIN -k noproc -sv no -if /var/log/audit/audit.log 2>/dev/null > $DIR/currnoproclog
 	/usr/bin/diff -N --suppress-common-lines $DIR/currnoproclog $DIR/prevnoproclog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 
@@ -86,7 +86,7 @@ function main
 	fi
 
 	#If there is a nofile violation add it to message.
-	/sbin/ausearch  -k nofile -sv no -if /var/log/audit/audit.log > $DIR/currnofilelog
+	/sbin/ausearch  -k nofile -sv no -if /var/log/audit/audit.log 2>/dev/null > $DIR/currnofilelog
 	/usr/bin/diff -N --suppress-common-lines $DIR/currnofilelog $DIR/prevnofilelog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 
@@ -97,7 +97,7 @@ function main
 	fi
 
 	#If there is a memlock violation add it to message.
-	/sbin/ausearch  -k memlock -sv no -if /var/log/audit/audit.log > $DIR/currmemlocklog
+	/sbin/ausearch  -k memlock -sv no -if /var/log/audit/audit.log 2>/dev/null > $DIR/currmemlocklog
 	/usr/bin/diff -N --suppress-common-lines $DIR/currmemlocklog $DIR/prevmemlocklog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 
@@ -108,7 +108,7 @@ function main
 	fi
 
 	#If there is as violation add it to message.
-	/sbin/ausearch  -k as -sv no -if /var/log/audit/audit.log  > $DIR/curraslog
+	/sbin/ausearch  -k as -sv no -if /var/log/audit/audit.log 2>/dev/null > $DIR/curraslog
 	/usr/bin/diff -N --suppress-common-lines $DIR/curraslog $DIR/prevaslog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 
@@ -119,7 +119,7 @@ function main
 	fi
 
 	#If there is a failed setrlimit violation add it to message.
-	/sbin/ausearch  -k rlimit -sv no -if /var/log/audit/audit.log  > $DIR/currrlimitlog
+	/sbin/ausearch  -k rlimit -sv no -if /var/log/audit/audit.log 2>/dev/null > $DIR/currrlimitlog
 	/usr/bin/diff -N --suppress-common-lines $DIR/currrlimitlog $DIR/prevrlimitlog | grep '^< type=SYSCALL' > $DIR/diffop
 
 	if [[ $? -eq 0 ]] 

@@ -7,6 +7,9 @@ auditctl -a exit,always -S clone -k noproc
 auditctl -a exit,always -S fork -k noproc
 auditctl -a exit,always -S vfork -k noproc
 
+#execve rules
+auditctl -a exit,always -S execve -k exec
+
 #fsize rules. fsize caps the maximum size of the file that can written by a process.
 auditctl -a exit,always -S write -F exit=-EFBIG -F success=0 -k fsize
 

@@ -32,7 +32,7 @@ def selectlogline(filename ,pid, ts, num_logs):
 					found = 1
 		if found :
 			logarray = prevline.split(' ')
-			print(" Time Stamp=%.3f parent_%s parent_%s" %(currts, logarray[24], logarray[25]))
+			print(" Time Stamp=%.3f parent_%s parent_%s" %(ts, logarray[24], logarray[25]))
 			break;
 if __name__ == "__main__":
 	main()

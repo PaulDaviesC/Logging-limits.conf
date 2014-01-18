@@ -8,13 +8,11 @@ def main():
 def getcmdline(pid, ts):
 	p = subprocess.Popen('ausearch -k exec -p %d'%(pid), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	lines = str(p.communicate()[0]).split('\n');
-	i=0
 	cmdline = ''
 	try:
-		while ts >= decimal.Decimal(lines[i*7+5].split(' ')[1].split('(')[1].split(':')[0]):
-			cmdline = lines[i*7+5];
-			cwdline = lines[i*7+4];
-			i = i + 1
+		for i in lines:
+			if i.startswith('type=EXECVE') and ts >= decimal.Decimal(i.split(' ')[1].split('(')[1].split(':')[0]):
+				cmdline = i;
 	except:
 		pass
 	try:
@@ -39,7 +37,6 @@ def printparents(pid, ts):
 			afp = open(filename)
 			prevline = ""
 			for i, line in enumerate(afp):
-				#print currpid
 				if line.startswith("type=SYSCALL") and "key=\"noproc\"" in line and "exit=%d" %(currpid) in line :
 					logarray = line.split(' ')
 					logts = decimal.Decimal(logarray[1].split('(')[1].split(':')[0])
@@ -52,7 +49,7 @@ def printparents(pid, ts):
 				parent_exe = [x for x in logarray if "exe=" in x][0]
 				parent_comm = [x for x in logarray if "comm=" in x][0]
 				pid = [x for x in logarray if "pid=" in x][1]
-				getcmdline(int(pid.split('=')[1]), currts)
+				getcmdline(int(pid.split('=')[1]), logts)
 				print("%s Time Stamp=%.3f parent_%s parent_%s" %(pid, currts, parent_exe, parent_comm))
 				printparents(int(pid.split('=')[1]), logts)
 				break;

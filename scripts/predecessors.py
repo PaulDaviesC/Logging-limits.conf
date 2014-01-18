@@ -52,7 +52,7 @@ def printparents(pid, ts):
 				parent_exe = [x for x in logarray if "exe=" in x][0]
 				parent_comm = [x for x in logarray if "comm=" in x][0]
 				pid = [x for x in logarray if "pid=" in x][1]
-				uid = [x for x in logarray if "uid=" in x][0]
+				uid = [x for x in logarray if "uid=" in x][1]
 				auid = [x for x in logarray if "auid=" in x][0]
 				getcmdline(int(pid.split('=')[1]), logts)
 				print(" %s %s %s  Time Stamp=%.3f parent_%s parent_%s" %(pid, uid, auid, currts, parent_exe, parent_comm))

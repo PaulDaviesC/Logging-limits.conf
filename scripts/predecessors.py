@@ -1,11 +1,18 @@
 import sys, subprocess, os, decimal
-num_logs = 4
+def get_num_logs():
+	fp = open("/etc/audit/auditd.conf");
+	for i in fp.readlines():
+		if i.startswith("num_logs ="):
+			return int(i.split("=")[1])
+	fp.close()
+num_logs=get_num_logs()
 def main():
 	sys.stdout.write("Given process's ");
 	getcmdline(int(sys.argv[1]), decimal.Decimal(sys.argv[2]))
 	print ' '
 	printparents(int(sys.argv[1]), float(sys.argv[2]))
 def getcmdline(pid, ts):
+	sys.stdout.write("command line=\"");
 	p = subprocess.Popen('ausearch -k exec -p %d'%(pid), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	lines = str(p.communicate()[0]).split('\n');
 	cmdline = ''
@@ -13,17 +20,13 @@ def getcmdline(pid, ts):
 		for i in lines:
 			if i.startswith('type=EXECVE') and ts >= decimal.Decimal(i.split(' ')[1].split('(')[1].split(':')[0]):
 				cmdline = i;
-	except:
-		pass
-	try:
 		cmdlist = cmdline.split(' ')
 		argc = int(cmdlist[2].split('=')[1])
-		sys.stdout.write("command line = \"");
 		for i in range(3, 3+argc):
 			sys.stdout.write("%s " %(cmdlist[i].split('=')[1][1:-1]));
-		sys.stdout.write("\"");
-	except:
+	except :
 		pass
+	sys.stdout.write("\""); #This line was added due to bug in the audit logging. argc is wrong at times.
 def printparents(pid, ts):
 	currpid = pid	
 	currts = ts
@@ -52,7 +55,7 @@ def printparents(pid, ts):
 				uid = [x for x in logarray if "uid=" in x][0]
 				auid = [x for x in logarray if "auid=" in x][0]
 				getcmdline(int(pid.split('=')[1]), logts)
-				print("%s %s %s  Time Stamp=%.3f parent_%s parent_%s" %(pid, uid, auid, currts, parent_exe, parent_comm))
+				print(" %s %s %s  Time Stamp=%.3f parent_%s parent_%s" %(pid, uid, auid, currts, parent_exe, parent_comm))
 				printparents(int(pid.split('=')[1]), logts)
 				break;
 		except:

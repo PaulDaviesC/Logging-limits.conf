@@ -12,7 +12,12 @@ def main():
 	elif int(sys.argv[3]) == 1:
 		for line in fp:
 			logarray = line.split(' ')
-			sys.stdout.write("%s %s %s %s %s" %(logarray[14],logarray[15],logarray[13], logarray[25], logarray[26]))
+			sys.stdout.write("%s %s %s %s %s" %(logarray[14],logarray[15], logarray[13], logarray[25], logarray[26]))
+			selectlogline(sys.argv[2],int(logarray[13].split('=')[1]), float(logarray[2].split('(')[1].split(':')[0]), num_logs)
+	elif int(sys.argv[3]) == 2:
+		for line in fp:
+			logarray = line.split(' ')
+			sys.stdout.write("%s %s %s resource=%s %s %s"%(logarray[14],logarray[15], logarray[13], logarray[7].split('=')[1], logarray[25], logarray[26]))
 			selectlogline(sys.argv[2],int(logarray[13].split('=')[1]), float(logarray[2].split('(')[1].split(':')[0]), num_logs)
 def selectlogline(filename ,pid, ts, num_logs):
 	for i in range (0, num_logs):

@@ -125,7 +125,7 @@ function main
 	if [[ $? -eq 0 ]] 
 	then
 		echo "RLIMIT VIOLATION" >> $DIR/message
-		python $DIR/preprocess.py $DIR/diffop $DIR/op 1 $num_logs  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
+		python $DIR/preprocess.py $DIR/diffop $DIR/op 2 $num_logs  | /usr/bin/sort | /usr/bin/uniq -c  >> $DIR/message
 		sendmail=1
 	fi
 
